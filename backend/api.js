@@ -68,31 +68,20 @@ app.post('/register',(req,res)=>{
 app.get('/favorites/:id',(req,res)=>{
     console.log("routehit")
     const id=req.params.id
-    connection.query('SELECT M.movie FROM movies M, favorites F WHERE F.movie_id = M.movie_id AND F.user_id=?',[id], (err,results)=>{
-        
+    connection.query('SELECT movie FROM favorites WHERE user_id=?',[id], (err,results)=>{
       if (err) return res.status(500).json({ message: 'DB error', error: String(err.code || err) });
       res.json(results || []);
-    
     })
-    
-    
 })
 
 app.post('/favorites',async (req,res)=>{
-    console.log(req.body)
     const {userId, Movie, movieId}= req.body
     const movieString= typeof Movie==="string"? Movie : JSON.stringify(Movie)
 
-    connection.query('INSERT IGNORE INTO movies (movie_id,movie) VALUES(?,?)',[movieId,movieString],(err,results)=>{
-       if (err) return res.status(500).json({ message: 'Insert movie failed', error: String(err.code || err) });
-    })
-
-    connection.query('INSERT INTO favorites (user_id,movie_id) VALUES (?,?)',[userId,movieId],(err,results)=>{
+    connection.query('INSERT INTO favorites (user_id, movie_id, movie) VALUES (?,?,?)',[userId,movieId,movieString],(err,results)=>{
         if (err) return res.status(500).json({ message: 'Insert favorite failed', error: String(err.code || err) });
-          res.status(201).json({ ok: true });
-        
+        res.status(201).json({ ok: true });
     })
-    
 })
 
 app.delete('/favorites/:user_id/:movie_id', async(req,res)=>{
