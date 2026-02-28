@@ -50,7 +50,7 @@ app.get('/login/:username',(req,res)=>{
 app.post('/register',(req,res)=>{
     
     const {username,email,password}=req.body
-    connection.query('INSERT INTO users (id,username,email,password) VALUES (?,?,?,?)',[getRandomId(),username,email,password], (err,results)=>{
+    connection.query('INSERT INTO users (username,email,password) VALUES (?,?,?)',[username,email,password], (err,results)=>{
         if(err){
             console.log('Register error:', err)
             res.status(400).send(err)
