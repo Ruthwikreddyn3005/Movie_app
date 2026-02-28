@@ -6,12 +6,14 @@ let app = express();
 
 app.use(cors());
 app.use(express.json())
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
     host:     process.env.DB_HOST     || 'localhost',
     user:     process.env.DB_USER     || 'root',
     password: process.env.DB_PASSWORD || 'Ruthwik@123',
     database: process.env.DB_NAME     || 'movie_app',
     port:     process.env.DB_PORT     || 3306,
+    waitForConnections: true,
+    connectionLimit: 10,
 })
 
 const PORT = process.env.PORT || 8080
