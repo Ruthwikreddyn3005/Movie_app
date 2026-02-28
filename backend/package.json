@@ -1,0 +1,17 @@
+{
+  "name": "movie-app-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "faker": "^5.5.3",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.9.0"
+  }
+}
