@@ -38,21 +38,15 @@ export const MovieProvider = ({children})=>{
     
 
     useEffect(()=>{
-        console.log("use effect run")
-        console.log("run useEffect")
+        if (!user?.id) return
         const FetchFavorites =async ()=>{
             const response= await fetch(`${url}${user.id}`)
             const data=await response.json()
             const fetchedMovies = data.map(m =>(typeof m.movie === 'string'? JSON.parse(m.movie): m.movie) )
-            const settingFavorites = fetchedMovies
-            setFavorites(settingFavorites)
-
-
+            setFavorites(fetchedMovies)
         }
         FetchFavorites()
-
-    
-    },[user.id, refresh])
+    },[user?.id, refresh])
 
 
 
@@ -104,6 +98,7 @@ export const MovieProvider = ({children})=>{
     }
     
     const isFavortie =(Movie)=>{
+       if (!Movie) return false
        return  favorites.some(movie=>movie.id==Movie.id)
     }
 
