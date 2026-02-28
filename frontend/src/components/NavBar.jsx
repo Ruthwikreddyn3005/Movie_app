@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import { useUserContext } from "../contexts/UserContext"
-import "../CSS/navbar.css"
+import "../CSS/Navbar.css"
 
 const NavBar=()=>{
     const { logout } = useUserContext()
