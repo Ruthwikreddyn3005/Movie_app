@@ -42,7 +42,7 @@ export const MovieProvider = ({children})=>{
         const FetchFavorites =async ()=>{
             const response= await fetch(`${url}${user.id}`)
             const data=await response.json()
-            const fetchedMovies = data.map(m =>(typeof m.movie === 'string'? JSON.parse(m.movie): m.movie) )
+            const fetchedMovies = data.map(m =>(typeof m.movie === 'string'? JSON.parse(m.movie): m.movie)).filter(Boolean)
             setFavorites(fetchedMovies)
         }
         FetchFavorites()
@@ -99,7 +99,7 @@ export const MovieProvider = ({children})=>{
     
     const isFavortie =(Movie)=>{
        if (!Movie) return false
-       return  favorites.some(movie=>movie.id==Movie.id)
+       return  favorites.some(movie=>movie && movie.id==Movie.id)
     }
 
     const Value={
